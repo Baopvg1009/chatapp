@@ -1,3 +1,4 @@
+import 'package:chatapp/pages/login_page.dart';
 import 'package:chatapp/services/auth/auth_service.dart';
 import 'package:chatapp/pages/settings_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,9 +6,15 @@ import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
-  void logout() {
+  void logout(BuildContext context) {
     final auth = AuthService();
     auth.signOut();
+
+    // Redirect to the LoginPage
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
   }
 
   @override
@@ -74,7 +81,7 @@ class MyDrawer extends StatelessWidget {
             child: ListTile(
               title: const Text("L O G O U T"),
               leading: const Icon(Icons.logout),
-              onTap: logout,
+              onTap: () => logout(context),
             ),
           ),
         ],

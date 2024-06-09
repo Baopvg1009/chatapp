@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:chatapp/access_token_firebase.dart';
+import 'package:chatapp/pages/home_page.dart';
+import 'package:chatapp/pages/register_page.dart';
 import 'package:chatapp/services/auth/auth_service.dart';
 import 'package:chatapp/components/my_button.dart';
 import 'package:chatapp/components/my_textfield.dart';
@@ -13,10 +15,7 @@ class LoginPage extends StatelessWidget {
   //email and pw text controllers
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  LoginPage({super.key, required this.onTap});
-
-  //tap to register
-  final void Function() onTap;
+  LoginPage({super.key});
 
   //login function
   void login(BuildContext context) async {
@@ -29,6 +28,11 @@ class LoginPage extends StatelessWidget {
       String? token = await FirebaseMessaging.instance.getToken();
 
       sendNotification(token!, 'Login Successful', 'Login Successful');
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
     } catch (e) {
       showDialog(
           context: context,
@@ -123,14 +127,14 @@ class LoginPage extends StatelessWidget {
                   text: "Login",
                   onTap: () => login(context),
                 ),
-                MyButton(
-                    text: "Test",
-                    onTap: () async {
-                      AccessTokenFirebase accessTokenGetter =
-                          AccessTokenFirebase();
-                      String token = await accessTokenGetter.getAccessToken();
-                      print('ABC' + token);
-                    }),
+                // MyButton(
+                //     text: "Test",
+                //     onTap: () async {
+                //       AccessTokenFirebase accessTokenGetter =
+                //           AccessTokenFirebase();
+                //       String token = await accessTokenGetter.getAccessToken();
+                //       print('ABC' + token);
+                //     }),
                 const SizedBox(height: 25),
 
                 //forgot password
@@ -142,7 +146,13 @@ class LoginPage extends StatelessWidget {
                     const Text("Not a member?",
                         style: TextStyle(color: Colors.white)),
                     GestureDetector(
-                      onTap: onTap,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RegisterPage()),
+                        );
+                      },
                       child: const Text(" Register now",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,

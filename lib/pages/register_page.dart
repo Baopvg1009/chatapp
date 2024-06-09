@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:chatapp/pages/home_page.dart';
+import 'package:chatapp/pages/login_page.dart';
 import 'package:chatapp/services/auth/auth_service.dart';
 import 'package:chatapp/components/my_button.dart';
 import 'package:chatapp/components/my_textfield.dart';
@@ -9,11 +11,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
-  final void Function() onTap;
-  RegisterPage({Key? key, required this.onTap}) : super(key: key);
-
+  const RegisterPage({Key? key}) : super(key: key);
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -61,6 +62,11 @@ class _RegisterPageState extends State<RegisterPage> {
       try {
         _auth.signUpWithEmailPassword(_emailController.text,
             _passwordController.text, _nameController.text, imageUrl);
+        // Redirect to the HomePage
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
       } catch (e) {
         showDialog(
           context: context,
@@ -179,7 +185,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Define the onTap function here
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
                       },
                       child: const Text(" Login now",
                           style: TextStyle(

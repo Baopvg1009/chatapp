@@ -4,6 +4,7 @@ import 'package:chatapp/services/auth/auth_service.dart';
 import 'package:chatapp/services/chat/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ChatPage extends StatelessWidget {
   final String receiverEmail;
@@ -36,6 +37,7 @@ class ChatPage extends StatelessWidget {
       _messageController.clear();
     }
   }
+  //pick image function
 
   @override
   Widget build(BuildContext context) {
@@ -220,6 +222,14 @@ class ChatPage extends StatelessWidget {
               hintText: "Type a message",
               obscureText: false,
               prefixIcon: const Icon(Icons.email),
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.image,
+              color: Colors.blue,
+              size: 40,
             ),
           ),
           Container(
